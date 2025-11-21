@@ -49,7 +49,7 @@ describe('GameService', () => {
     const challenge = service.getCurrentChallenge();
     
     // On sélectionne les bonnes réponses pour réussir
-    challenge.images.forEach(img => {
+    challenge.images!.forEach(img => {
         img.selected = img.valide; 
     });
 

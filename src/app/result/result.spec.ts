@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ResultComponent } from './result'; // Correction du nom
+import { ResultComponent } from './result';
 import { RouterTestingModule } from '@angular/router/testing';
+import { GameService } from '../game';
 
 describe('ResultComponent', () => {
   let component: ResultComponent;
@@ -8,7 +9,15 @@ describe('ResultComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ResultComponent, RouterTestingModule]
+      // 1. On importe le routeur de test AVEC une route 'captcha' configurée
+      imports: [
+        ResultComponent, 
+        RouterTestingModule.withRoutes([
+           // On crée une route factice pour éviter l'erreur "Cannot match route"
+           { path: 'captcha', redirectTo: '' } 
+        ])
+      ],
+      providers: [GameService]
     })
     .compileComponents();
     
