@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-// On définit à quoi ressemble une image de jeu
 export interface GameImage {
   id: number;
-  url: string;      // L'image à afficher
-  valide: boolean;  // Est-ce que c'est une bonne réponse ?
-  selected: boolean; // Est-ce que l'utilisateur a cliqué dessus ?
+  url: string;
+  valide: boolean;
+  selected: boolean;
 }
 
-// On définit à quoi ressemble un niveau
 export interface Challenge {
+  type: 'GRID' | 'INPUT';
   instruction: string;
-  images: GameImage[];
+  images?: GameImage[];
+  answer?: string;
+  userAnswer?: string;
 }
 
 @Injectable({
@@ -21,13 +22,30 @@ export interface Challenge {
 export class GameService {
   
   currentStep: number = 1;
-  readonly totalSteps: number = 2;
+  readonly totalSteps: number = 4; 
 
-  // --- NOS DONNÉES DE JEU (Hardcodées pour l'instant) ---
+  // --- 1. LES BANQUES DE DONNÉES (Pour l'aléatoire) ---
+  
+  private mathBank = [
+    { q: '12 + 15', a: '27' },
+    { q: '100 - 45', a: '55' },
+    { q: '8 x 7', a: '56' },
+    { q: '50 / 2', a: '25' },
+    { q: '10 + 10 + 10', a: '30' },
+    { q: '3 x 3 + 1', a: '10' }
+  ];
+
+  private passwordBank = [
+    'FURY', 'CYBER', 'NEON', 'MATRIX', 'ANGULAR', 
+    'PIXEL', 'GLITCH', 'SYNTAX', 'PROXY', 'VECTOR'
+  ];
+
+  // --- 2. LES CHALLENGES (Initialisés vides, remplis dynamiquement) ---
   challenges: Challenge[] = [
-    // NIVEAU 1 (Index 0 dans le tableau)
+    // NIVEAU 1 : IMAGES (Robots) - Statique pour l'instant (ou mélangeable)
     {
-      instruction: "Sélectionnez tous les ROBOTS",
+      type: 'GRID',
+      instruction: "SÉLECTIONNEZ TOUS LES ROBOTS",
       images: [
         { id: 1, url: 'https://placehold.co/150/1a0b2e/00ffff?text=ROBOT', valide: true, selected: false },
         { id: 2, url: 'https://placehold.co/150/1a0b2e/ffffff?text=HUMAIN', valide: false, selected: false },
@@ -35,92 +53,121 @@ export class GameService {
         { id: 4, url: 'https://placehold.co/150/1a0b2e/ffffff?text=CHAT', valide: false, selected: false }
       ]
     },
-    // NIVEAU 2 (Index 1 dans le tableau)
+    // NIVEAU 2 : IMAGES (Armes)
     {
-      instruction: "Sélectionnez toutes les ARMES",
+      type: 'GRID',
+      instruction: "SÉLECTIONNEZ TOUTES LES ARMES",
       images: [
         { id: 1, url: 'https://placehold.co/150/000000/ff0055?text=EPEE', valide: true, selected: false },
         { id: 2, url: 'https://placehold.co/150/000000/ffffff?text=FLEUR', valide: false, selected: false },
         { id: 3, url: 'https://placehold.co/150/000000/ffffff?text=LIVRE', valide: false, selected: false },
         { id: 4, url: 'https://placehold.co/150/000000/ff0055?text=HACHE', valide: true, selected: false }
       ]
-    }
+    },
+    // NIVEAU 3 : Sera remplacé par le random
+    { type: 'INPUT', instruction: '', answer: '', userAnswer: '' },
+    // NIVEAU 4 : Sera remplacé par le random
+    { type: 'INPUT', instruction: '', answer: '', userAnswer: '' }
   ];
 
   constructor(private router: Router) { 
+    // Important : On prépare les questions AVANT de charger la sauvegarde
+    this.prepareRandomChallenges();
     this.loadState();
   }
 
-  // --- RÉCUPÉRER LE CHALLENGE ACTUEL ---
+  // --- 3. LA MAGIE DE L'ALÉATOIRE ---
+  
+  private prepareRandomChallenges() {
+    // A. Mélange des images (Niveaux 1 et 2)
+    this.shuffleImages();
+
+    // B. Choix du calcul (Niveau 3)
+    // On prend un index au hasard dans la mathBank
+    const randomMath = this.mathBank[Math.floor(Math.random() * this.mathBank.length)];
+    this.challenges[2] = {
+      type: 'INPUT',
+      instruction: `DÉCRYPTEZ LE CODE : ${randomMath.q} = ?`,
+      answer: randomMath.a,
+      userAnswer: ''
+    };
+
+    // C. Choix du mot de passe (Niveau 4)
+    const randomWord = this.passwordBank[Math.floor(Math.random() * this.passwordBank.length)];
+    this.challenges[3] = {
+      type: 'INPUT',
+      instruction: `TAPEZ LE MOT DE PASSE : '${randomWord}'`,
+      answer: randomWord,
+      userAnswer: ''
+    };
+  }
+
+  private shuffleArray(array: any[]) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+  private shuffleImages() {
+    this.challenges.forEach(c => {
+      if (c.type === 'GRID' && c.images) {
+        this.shuffleArray(c.images);
+      }
+    });
+  }
+
+  // --- LE RESTE DE LA LOGIQUE (Inchangé) ---
+
   getCurrentChallenge(): Challenge {
-    // Les tableaux commencent à 0, donc on fait step - 1
     return this.challenges[this.currentStep - 1];
   }
 
-  // --- LOGIQUE DE VALIDATION ---
-  // Cette fonction vérifie si l'utilisateur a bon
-  checkAnswers(): boolean {
-    const currentChallenge = this.getCurrentChallenge();
-    
-    // On vérifie chaque image
-    for (let img of currentChallenge.images) {
-      // Si (C'est valide ET pas sélectionné) OU (Pas valide ET sélectionné) => ERREUR
-      if (img.valide !== img.selected) {
-        return false; // Perdu
-      }
-    }
-    return true; // Tout est bon !
-  }
-// Nouvelle méthode pour avoir le détail de l'erreur
-  getValidationStatus(): 'OK' | 'WRONG_SELECTION' | 'MISSING_TARGET' {
-    const currentChallenge = this.getCurrentChallenge();
-    let missedCorrect = false;
+  getValidationStatus(): 'OK' | 'WRONG_SELECTION' | 'MISSING_TARGET' | 'WRONG_ANSWER' {
+    const current = this.getCurrentChallenge();
 
-    for (let img of currentChallenge.images) {
-      // Cas 1 : J'ai sélectionné un truc qu'il ne fallait pas (GRAVE)
-      if (img.selected && !img.valide) {
-        return 'WRONG_SELECTION'; 
+    if (current.type === 'GRID' && current.images) {
+      let missedCorrect = false;
+      for (let img of current.images) {
+        if (img.selected && !img.valide) return 'WRONG_SELECTION';
+        if (!img.selected && img.valide) missedCorrect = true;
       }
-      
-      // Cas 2 : Je n'ai pas sélectionné un truc qu'il fallait (MOINS GRAVE)
-      if (!img.selected && img.valide) {
-        missedCorrect = true;
-      }
+      if (missedCorrect) return 'MISSING_TARGET';
+      return 'OK';
     }
 
-    // Si j'ai manqué des trucs valides (mais sans cliquer de faux)
-    if (missedCorrect) {
-      return 'MISSING_TARGET';
+    if (current.type === 'INPUT') {
+      const cleanUser = current.userAnswer?.trim().toUpperCase();
+      const cleanAnswer = current.answer?.toUpperCase();
+      if (cleanUser === cleanAnswer) return 'OK';
+      return 'WRONG_ANSWER';
     }
-
-    // Sinon, tout est parfait
     return 'OK';
   }
-  // --- PROGRESSION ---
+
   validateStep() {
-    // On vérifie d'abord si les réponses sont bonnes
-    if (this.checkAnswers()) {
-      // Si c'est bon, on passe à la suite
-      if (this.currentStep < this.totalSteps) {
-        this.currentStep++;
-        this.saveState();
-        // Petite astuce : on reset les sélections pour le prochain niveau
-        this.resetSelections(); 
-      } else {
-        this.currentStep = this.totalSteps + 1;
-        this.saveState();
-        this.router.navigate(['/result']);
-      }
+    if (this.currentStep < this.totalSteps) {
+      this.currentStep++;
+      this.saveState();
+      this.resetSelections();
     } else {
-      alert("Mauvaise réponse ! Essayez encore."); // Simple alerte pour l'instant
+      this.currentStep = this.totalSteps + 1;
+      this.saveState();
+      this.router.navigate(['/result']);
     }
+  }
+
+  checkAnswers(): boolean {
+    return this.getValidationStatus() === 'OK';
   }
 
   private resetSelections() {
-    this.challenges.forEach(c => c.images.forEach(i => i.selected = false));
+    this.challenges.forEach(c => {
+      if (c.images) c.images.forEach(i => i.selected = false);
+      if (c.type === 'INPUT') c.userAnswer = '';
+    });
   }
 
-  // ... (Garde les méthodes saveState, loadState, finishGame, resetGame comme avant) ...
   private saveState() {
     localStorage.setItem('angulIt_level', this.currentStep.toString());
   }
@@ -134,7 +181,11 @@ export class GameService {
 
   resetGame() {
     this.currentStep = 1;
-    this.resetSelections(); // Important de remettre à zéro
+    this.resetSelections();
+    
+    // CRUCIAL : On re-génère de nouvelles questions pour la nouvelle partie !
+    this.prepareRandomChallenges(); 
+    
     localStorage.removeItem('angulIt_level');
     this.router.navigate(['/captcha']);
   }

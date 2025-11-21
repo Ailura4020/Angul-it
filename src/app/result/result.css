@@ -64,3 +64,57 @@
   color: #000;
   box-shadow: 0 0 20px #00ff00;
 }
+
+/* =========================================
+   MOBILE RESPONSIVE
+   ========================================= */
+@media (max-width: 600px) {
+  
+  .result-container {
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box; /* Pour inclure le padding dans la largeur */
+  }
+
+  /* 1. Le Titre "Mission Accomplie" */
+  .glitch-title {
+    font-size: 2.2rem; /* Beaucoup plus petit (était 4rem) */
+    line-height: 1.1; /* Lignes plus serrées */
+    margin-bottom: 30px;
+    word-wrap: break-word; /* Évite que ça dépasse */
+  }
+
+  /* 2. La Boîte de Score */
+  .score-box {
+    width: 100%; /* Pleine largeur */
+    box-sizing: border-box;
+    transform: skew(0deg); /* On redresse pour gagner de la place */
+    padding: 20px; /* Moins de rembourrage interne */
+    border-width: 2px; /* Bordure plus fine */
+  }
+
+  .score-box p {
+    font-size: 1.1rem;
+    margin: 5px 0;
+  }
+
+  .score {
+    font-size: 1.5rem;
+    display: block; /* Passe à la ligne pour bien le mettre en valeur */
+    margin-top: 5px;
+  }
+
+  /* 3. Le Message de félicitations */
+  .message {
+    font-size: 1rem;
+    margin-bottom: 30px;
+    padding: 0 10px;
+  }
+
+  /* 4. Le Bouton Rejouer */
+  .btn-restart {
+    width: 100%; /* Pleine largeur */
+    font-size: 1.2rem;
+    padding: 15px 0;
+  }
+}

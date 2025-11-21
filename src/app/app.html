@@ -1,14 +1,19 @@
 <div class="main-wrapper">
   
-  <header class="arcade-header">
-    <h1 class="game-title">ANGUL<span class="highlight">-IT</span></h1>
-    
-    <nav class="arcade-nav">
-      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">HOME</a>
-      <a routerLink="/captcha" routerLinkActive="active">FIGHT</a>
-      <a routerLink="/result" routerLinkActive="active">SCORE</a>
-    </nav>
-  </header>
+  @if (router.url !== '/') {
+    <header class="arcade-header">
+      <h1 class="game-title">ANGUL<span class="highlight">-IT</span></h1>
+      
+      <nav class="arcade-nav">
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">HOME</a>
+        <a routerLink="/captcha" routerLinkActive="active">FIGHT</a>
+  
+        @if (game.isGameFinished()) {
+          <a routerLink="/result" routerLinkActive="active">SCORE</a>
+        }
+      </nav>
+    </header>
+  }
 
   <router-outlet></router-outlet>
 

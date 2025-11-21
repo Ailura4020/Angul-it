@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { GameService } from '../game'; // On importe le moteur
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router'; // Import du Router
+import { GameService } from '../game';
 
 @Component({
   selector: 'app-result',
@@ -8,7 +9,19 @@ import { GameService } from '../game'; // On importe le moteur
   templateUrl: './result.html',
   styleUrl: './result.css'
 })
-export class ResultComponent {
-  // On injecte le service pour pouvoir l'utiliser dans le HTML
-  constructor(public game: GameService) {}
+// On implémente OnInit pour vérifier dès l'ouverture
+export class ResultComponent implements OnInit {
+  
+  constructor(
+    public game: GameService, 
+    private router: Router // Injection du Router
+  ) {}
+
+  ngOnInit() {
+    // SI le jeu N'EST PAS fini (le ! veut dire "NOT")
+    if (!this.game.isGameFinished()) {
+      // On redirige de force vers le captcha
+      this.router.navigate(['/captcha']);
+    }
+  }
 }

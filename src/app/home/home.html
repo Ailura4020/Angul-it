@@ -1,18 +1,25 @@
-<div class="home-container">
-  <div class="card">
-    <h2>Êtes-vous un humain ?</h2>
-    <p>
-      Bienvenue sur <strong>Angul-It</strong>.
-      Pour accéder au contenu, nous devons vérifier que vous n'êtes pas un robot.
-    </p>
-    
-    <p class="info-text">
-      Vous allez devoir réussir une série de défis interactifs.
-      Prêt à relever le challenge ?
-    </p>
-
-    <button routerLink="/captcha" class="btn-start">
-      Commencer la vérification
-    </button>
+<div class="title-screen-container">
+  
+  <div class="hero-title-box">
+    <h1 class="neon-hero-text">STREETS OF</h1>
+    <h1 class="neon-hero-text highlight-text">ANGUL-IT</h1>
   </div>
+
+  <div class="mission-briefing">
+    <h3>>>> INCOMING TRANSMISSION...</h3>
+    <p>
+      Bienvenue, <strong>Agent</strong>. L'accès au système central est verrouillé.
+      Pour infiltrer le réseau, vous devez prouver votre humanité.
+    </p>
+    <p>
+      Réussissez la série de défis interactifs pour obtenir le code d'accès.
+      L'échec n'est pas une option.
+    </p>
+  </div>
+
+  <a routerLink="/captcha" class="press-start-prompt">
+    <span class="blinking-text">PRESS START TO FIGHT</span>
+    <div class="insert-coin">INSERT COIN</div>
+  </a>
+
 </div>

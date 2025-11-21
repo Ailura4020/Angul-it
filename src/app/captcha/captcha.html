@@ -1,32 +1,61 @@
 <div class="captcha-container">
-  
-  <div class="level-info">
-    <h3>MISSION {{ game.currentStep }} / {{ game.totalSteps }}</h3>
-    <h1 class="instruction">{{ currentChallenge.instruction }}</h1>
+
+  <div class="hud-container">
+    <div class="avatar-box">
+      <div class="avatar-circle"></div>
+      <span class="player-name">PLAYER 1</span>
+    </div>
+
+    <div class="life-bar-container">
+      <div class="life-bar-border">
+        <div class="life-bar-fill" 
+             [style.width.%]="((game.currentStep - 1) / game.totalSteps) * 100">
+        </div>
+      </div>
+      <span class="hud-score">LVL {{ game.currentStep }}</span>
+    </div>
   </div>
 
-  <div class="grid-container">
-    @for (img of currentChallenge.images; track img.id) {
-      <div 
-        class="grid-item" 
-        [class.selected]="img.selected" 
-        (click)="toggleSelection(img)">
-        
-        <img [src]="img.url" alt="Challenge Image">
-        
-        @if (img.selected) {
-          <div class="overlay">✅</div>
+ @if (currentChallenge) {
+    <h1 class="instruction">{{ currentChallenge.instruction }}</h1>
+
+    @if (currentChallenge.type === 'GRID') {
+      <div class="grid-container">
+        @for (img of currentChallenge.images!; track img.id) {
+          <div 
+            class="grid-item" 
+            [class.selected]="img.selected" 
+            (click)="toggleSelection(img)">
+            
+            <img [src]="img.url" alt="Challenge Image">
+            
+            @if (img.selected) {
+              <div class="overlay">✅</div>
+            }
+          </div>
         }
       </div>
     }
-  </div>
 
-  <button (click)="validate()" class="btn-validate">
-    VALIDER LA SÉQUENCE
-  </button>
+    @if (currentChallenge.type === 'INPUT') {
+      <div class="input-container">
+        <span class="terminal-prompt">></span>
+        <input 
+          type="text" 
+          [(ngModel)]="currentChallenge.userAnswer" 
+          class="terminal-input" 
+          placeholder="ENTREZ LA RÉPONSE..."
+          (keyup.enter)="validate()" 
+          autofocus>
+      </div>
+    }
 
-  @if (errorMessage) {
-    <p class="error-msg">{{ errorMessage }}</p>
+    <button (click)="validate()" class="btn-validate">
+      VALIDER LA SÉQUENCE
+    </button>
+
+    @if (errorMessage) {
+      <p class="error-msg">{{ errorMessage }}</p>
+    }
   }
-
 </div>

@@ -1,79 +1,136 @@
-/* Centre la carte verticalement et horizontalement */
-.home-container {
+/* =========================================
+   ÉCRAN TITRE STYLE ARCADE (FINAL)
+   ========================================= */
+
+.title-screen-container {
+  /* AGRANDISSEMENT DE LA FENÊTRE */
+  width: 95%; /* Plus large */
+  min-height: 85vh; /* Prend 85% de la hauteur de l'écran */
+  margin: 10px auto; /* Centré */
+  
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-grow: 1; /* Prend tout l'espace disponible */
-  padding-top: 2rem;
-}
-
-/* La Carte de Mission */
-.card {
-  background: rgba(20, 20, 30, 0.9); /* Fond très sombre presque opaque */
-  padding: 3rem;
-  max-width: 600px;
   text-align: center;
+  padding: 20px;
   
-  /* BORDURE FUTURISTE */
-  border: 3px solid #00ffff; /* Cyan */
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2); /* Lueur cyan */
-  
-  /* Coins coupés (style science-fiction) */
-  clip-path: polygon(
-    20px 0, 100% 0, 
-    100% calc(100% - 20px), calc(100% - 20px) 100%, 
-    0 100%, 0 20px
-  );
+  /* Image de fond Cyberpunk */
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), 
+              url('https://images.unsplash.com/photo-1555680202-c325e5274325?q=80&w=2070&auto=format&fit=crop') no-repeat center center;
+  background-size: cover;
+  border-radius: 20px;
+  border: 3px solid #ff0055;
+  box-shadow: 0 0 30px rgba(255, 0, 85, 0.3), inset 0 0 50px rgba(0,0,0,0.8);
+  position: relative;
+  overflow: hidden;
 }
 
-h2 {
-  color: #ffea00; /* Jaune */
-  font-size: 2.5rem;
-  margin-top: 0;
-  text-shadow: 3px 3px #000;
-  text-transform: uppercase;
+/* LE TITRE */
+.hero-title-box {
+  margin-bottom: 30px;
+  transform: skew(-5deg) rotate(-2deg);
 }
 
-p {
-  font-size: 1.1rem;
-  color: #ddd;
+.neon-hero-text {
+  font-family: 'Russo One', sans-serif;
+  font-size: 5rem;
+  margin: 0;
+  line-height: 0.9;
+  color: #fff;
+  text-shadow: 3px 3px 0 #000, -3px -3px 0 #000, 0 0 20px #00ffff;
 }
 
-.info-text {
+.highlight-text {
+  color: #ffea00;
+  text-shadow: 3px 3px 0 #000, -3px -3px 0 #000, 0 0 30px #ff0055, 0 0 60px #ff0055;
+}
+
+/* LE BRIEFING DE MISSION (Le texte ajouté) */
+.mission-briefing {
+  background: rgba(0, 0, 0, 0.8); /* Fond noir transparent */
+  border: 1px solid #00ffff; /* Bordure cyan fine */
+  padding: 20px;
+  max-width: 600px;
+  margin-bottom: 40px;
   color: #ccc;
-  border-left: 4px solid #ff0055; /* Barre rose à gauche */
-  padding-left: 15px;
+  font-family: 'Saira', monospace;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
+  backdrop-filter: blur(5px); /* Petit effet de flou derrière */
+}
+
+.mission-briefing h3 {
+  color: #00ff00; /* Vert hacker */
+  margin-top: 0;
+  font-family: 'Russo One', sans-serif;
   text-align: left;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 15px;
-  margin: 30px 0;
-  font-style: italic;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  animation: blink 2s infinite;
+}
+
+.mission-briefing strong {
+  color: #ffea00;
 }
 
 /* LE BOUTON START */
-.btn-start {
-  background: linear-gradient(90deg, #ff0055, #ff4d88); /* Dégradé Rose */
-  color: white;
-  border: none;
-  padding: 15px 40px;
-  font-family: 'Russo One', sans-serif;
-  font-size: 1.5rem;
-  text-transform: uppercase;
+.press-start-prompt {
+  text-decoration: none;
   cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.press-start-prompt:hover {
+  transform: scale(1.1);
+}
+
+.blinking-text {
+  font-family: 'Russo One', sans-serif;
+  font-size: 2.5rem;
+  color: #00ffff;
+  text-shadow: 0 0 10px #00ffff;
+  animation: textBlink 0.8s infinite alternate;
+  display: block;
+}
+
+.insert-coin {
+  font-family: 'Saira', sans-serif;
+  font-size: 1.2rem;
+  color: #ccc;
   margin-top: 10px;
-  
-  /* Forme biseautée dynamique */
-  transform: skew(-10deg);
-  transition: transform 0.2s, box-shadow 0.2s;
-  
-  box-shadow: 5px 5px 0px #000; /* Ombre dure noire */
+  letter-spacing: 2px;
 }
 
-.btn-start:hover {
-  transform: skew(-10deg) scale(1.05); /* Grossit un peu */
-  box-shadow: 0 0 20px #ff0055; /* Glow rose intense */
+/* ANIMATIONS */
+@keyframes textBlink {
+  0% { opacity: 1; text-shadow: 0 0 10px #00ffff; }
+  100% { opacity: 0.3; text-shadow: none; }
 }
 
-.btn-start:active {
-  transform: skew(-10deg) scale(0.95);
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 600px) {
+  .title-screen-container {
+    min-height: 90vh; /* Encore plus grand sur mobile */
+    width: 100%; /* Pleine largeur */
+    margin: 0;
+    border-radius: 0;
+    border: none;
+    border-bottom: 2px solid #ff0055;
+  }
+
+  .neon-hero-text { font-size: 3rem; }
+  .blinking-text { font-size: 1.8rem; margin-top: 20px; }
+  
+  .mission-briefing {
+    font-size: 1rem;
+    padding: 15px;
+    width: 90%;
+  }
 }
