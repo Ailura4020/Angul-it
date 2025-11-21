@@ -1,0 +1,60 @@
+/* Conteneur principal qui englobe tout */
+.main-wrapper {
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Le Header style Arcade */
+.arcade-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+  border-bottom: 2px solid #ff0055; /* Ligne rose néon */
+  padding-bottom: 20px;
+  background: rgba(0, 0, 0, 0.3); /* Fond sombre semi-transparent */
+}
+
+/* Le Titre du Jeu */
+.game-title {
+  font-size: 3rem; /* Très gros */
+  margin: 0;
+  color: #fff;
+  text-shadow: 3px 3px 0px #000, 0 0 15px #ff0055; /* Effet néon rose */
+  font-style: italic;
+  letter-spacing: 2px;
+}
+
+.highlight {
+  color: #ffea00; /* Jaune électrique */
+}
+
+/* La Navigation */
+.arcade-nav {
+  margin-top: 20px;
+}
+
+.arcade-nav a {
+  color: #00ffff; /* Cyan */
+  text-decoration: none;
+  margin: 0 20px;
+  font-family: 'Russo One', sans-serif; /* Police Arcade */
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  display: inline-block;
+}
+
+.arcade-nav a:hover {
+  color: #fff;
+  text-shadow: 0 0 10px #00ffff;
+  transform: scale(1.1); /* Grossit légèrement */
+}
+
+/* Style quand le lien est actif (page en cours) */
+.arcade-nav a.active {
+  color: #ff0055;
+  border-bottom: 2px solid #ff0055;
+}

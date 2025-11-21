@@ -1,0 +1,25 @@
+/* Reset de base */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* LE THEME STREETS OF RAGE */
+body {
+  /* Dégradé violet sombre / bleu nuit */
+  background: linear-gradient(135deg, #1a0b2e 0%, #2b1055 50%, #000000 100%);
+  /* Couleur de texte par défaut : Blanc cassé */
+  color: #f0f0f0;
+  font-family: 'Saira', sans-serif;
+  /* Image de fond subtile style "bruit" pour effet rétro (optionnel mais cool) */
+  background-attachment: fixed;
+}
+
+/* Titres impactants */
+h1, h2, h3 {
+  font-family: 'Russo One', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}

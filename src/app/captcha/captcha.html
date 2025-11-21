@@ -1,0 +1,32 @@
+<div class="captcha-container">
+  
+  <div class="level-info">
+    <h3>MISSION {{ game.currentStep }} / {{ game.totalSteps }}</h3>
+    <h1 class="instruction">{{ currentChallenge.instruction }}</h1>
+  </div>
+
+  <div class="grid-container">
+    @for (img of currentChallenge.images; track img.id) {
+      <div 
+        class="grid-item" 
+        [class.selected]="img.selected" 
+        (click)="toggleSelection(img)">
+        
+        <img [src]="img.url" alt="Challenge Image">
+        
+        @if (img.selected) {
+          <div class="overlay">✅</div>
+        }
+      </div>
+    }
+  </div>
+
+  <button (click)="validate()" class="btn-validate">
+    VALIDER LA SÉQUENCE
+  </button>
+
+  @if (errorMessage) {
+    <p class="error-msg">{{ errorMessage }}</p>
+  }
+
+</div>

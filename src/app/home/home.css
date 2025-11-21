@@ -1,0 +1,79 @@
+/* Centre la carte verticalement et horizontalement */
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1; /* Prend tout l'espace disponible */
+  padding-top: 2rem;
+}
+
+/* La Carte de Mission */
+.card {
+  background: rgba(20, 20, 30, 0.9); /* Fond très sombre presque opaque */
+  padding: 3rem;
+  max-width: 600px;
+  text-align: center;
+  
+  /* BORDURE FUTURISTE */
+  border: 3px solid #00ffff; /* Cyan */
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2); /* Lueur cyan */
+  
+  /* Coins coupés (style science-fiction) */
+  clip-path: polygon(
+    20px 0, 100% 0, 
+    100% calc(100% - 20px), calc(100% - 20px) 100%, 
+    0 100%, 0 20px
+  );
+}
+
+h2 {
+  color: #ffea00; /* Jaune */
+  font-size: 2.5rem;
+  margin-top: 0;
+  text-shadow: 3px 3px #000;
+  text-transform: uppercase;
+}
+
+p {
+  font-size: 1.1rem;
+  color: #ddd;
+}
+
+.info-text {
+  color: #ccc;
+  border-left: 4px solid #ff0055; /* Barre rose à gauche */
+  padding-left: 15px;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  margin: 30px 0;
+  font-style: italic;
+}
+
+/* LE BOUTON START */
+.btn-start {
+  background: linear-gradient(90deg, #ff0055, #ff4d88); /* Dégradé Rose */
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  font-family: 'Russo One', sans-serif;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 10px;
+  
+  /* Forme biseautée dynamique */
+  transform: skew(-10deg);
+  transition: transform 0.2s, box-shadow 0.2s;
+  
+  box-shadow: 5px 5px 0px #000; /* Ombre dure noire */
+}
+
+.btn-start:hover {
+  transform: skew(-10deg) scale(1.05); /* Grossit un peu */
+  box-shadow: 0 0 20px #ff0055; /* Glow rose intense */
+}
+
+.btn-start:active {
+  transform: skew(-10deg) scale(0.95);
+}

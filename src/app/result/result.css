@@ -1,0 +1,66 @@
+.result-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 50px;
+  text-align: center;
+}
+
+.glitch-title {
+  font-size: 4rem;
+  color: #00ff00; /* Vert Hacker */
+  text-shadow: 3px 3px #000, 0 0 20px #00ff00;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+}
+
+.score-box {
+  border: 4px solid #00ff00;
+  padding: 20px 50px;
+  background: rgba(0, 20, 0, 0.8);
+  box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+  margin-bottom: 30px;
+  transform: skew(-10deg); /* Toujours ce style penché */
+}
+
+.score-box p {
+  font-family: 'Russo One', sans-serif;
+  font-size: 1.5rem;
+  margin: 10px 0;
+  color: #fff;
+}
+
+.human-status {
+  color: #00ffff;
+}
+
+.score {
+  color: #ffea00;
+  font-size: 2rem;
+}
+
+.message {
+  max-width: 600px;
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+  color: #ccc;
+}
+
+.btn-restart {
+  background: transparent;
+  border: 2px solid #00ff00;
+  color: #00ff00;
+  padding: 15px 40px;
+  font-family: 'Russo One', sans-serif;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-transform: uppercase;
+}
+
+.btn-restart:hover {
+  background: #00ff00;
+  color: #000;
+  box-shadow: 0 0 20px #00ff00;
+}
