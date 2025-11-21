@@ -46,3 +46,31 @@ Remplacez `TON_PSEUDO` par votre nom d'utilisateur GitHub :
 ```bash
 git clone [https://github.com/TON_PSEUDO/angul-it.git](https://github.com/TON_PSEUDO/angul-it.git)
 cd angul-it
+
+2. Équiper les armes (Installer les dépendances)
+Bash
+npm install
+(Si besoin d'un passe-partout : npm install --legacy-peer-deps)
+
+3. Lancer la borne d'arcade
+Bash
+ng serve
+Rendez-vous sur http://localhost:4200 et préparez-vous au combat.
+
+🧪 DIAGNOSTIC SYSTÈME (TESTS)
+Le code est blindé. Le moteur de jeu (GameService) a été testé sous la torture.
+
+Pour lancer la suite de tests unitaires (8/8 Succès) :
+
+Bash
+ng test
+Couverture : Navigation, Logique de progression, Sauvegarde, Reset.
+
+📱 COMMANDES
+Souris / Tactile : Sélectionner les cibles.
+Clavier : Saisir les codes de sécurité.
+Entrée : Valider la séquence.
+🏆 CRÉDITS
+Développé par : Justine Faure (Player 1) Moteur : Angular 17 Style : CSS Natif (Pas de librairie, que du talent)
+
+"L'échec n'est pas une option. Good luck."
