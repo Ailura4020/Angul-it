@@ -1,6 +1,6 @@
 # 🕹️ STREETS OF ANGUL-IT
 
-![Ecran Titre](./capture-ecran.png)
+![Ecran Titre](./public/capture-ecran.png)
 
 > **> SYSTÈME VERROUILLÉ.**
 > **> VÉRIFICATION D'IDENTITÉ REQUISE.**
